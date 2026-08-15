@@ -73,7 +73,7 @@ const PROJECTS = [
     title: "Grocery POS",
     tag: "Point of sale",
     image: laptopPos,
-    url: "https://grocery-shop-fawn.vercel.app/employee/dashboard",
+    url: "https://grocery-shop-fawn.vercel.app",
     blurb:
       "A fast checkout and employee dashboard with billing, customer history, receipts and live sales stats for neighbourhood stores.",
     stack: ["Next.js", "Tailwind", "Node.js", "Express"],
