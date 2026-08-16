@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
-import { AnimatePresence, motion } from "motion/react";
+import * as DialogPrimitive from "@radix-ui/react-dialog";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import {
   ArrowUpRight,
+  BadgeDollarSign,
+  Calculator,
   Linkedin,
   Mail,
   MapPin,
@@ -10,7 +13,15 @@ import {
   GraduationCap,
   Briefcase,
   Menu,
+  MonitorSmartphone,
+  Package,
+  ReceiptText,
+  ShieldCheck,
+  ShoppingCart,
+  UserCog,
+  Users,
   X,
+  LayoutDashboard,
 } from "lucide-react";
 
 import {
@@ -51,10 +62,10 @@ const STATS = [
 ];
 
 const STACK = [
-  { group: "Languages", items: ["JavaScript", "JSX", "HTML", "CSS"] },
+  { group: "Languages", items: ["TypeScript", "JavaScript", "HTML", "CSS"] },
   { group: "Frameworks", items: ["React 19", "Next.js", "TanStack"] },
   { group: "Backend", items: ["Node.js", "Express", "Firebase"] },
-  { group: "Tooling", items: ["Vite", "Bun", "Git", "Figma"] },
+  { group: "Tooling", items: ["Git","GitHub", "VS Code", "Vite", "npm", "Figma"] },
 ];
 
 const PROJECTS = [
@@ -70,13 +81,13 @@ const PROJECTS = [
   },
   {
     n: "02",
-    title: "Grocery POS",
+    title: "Smart Grocery POS",
     tag: "Point of sale",
     image: laptopPos,
-    url: "https://grocery-shop-fawn.vercel.app",
+    details: "grocery-pos",
     blurb:
       "A fast checkout and employee dashboard with billing, customer history, receipts and live sales stats for neighbourhood stores.",
-    stack: ["Next.js", "Tailwind", "Node.js", "Express"],
+    stack: ["React", "JavaScript", "Tailwind CSS", "Firebase"],
   },
   {
     n: "03",
@@ -87,6 +98,67 @@ const PROJECTS = [
     blurb:
       "An editorial plant and flower storefront with curated collections, wishlist and cart — warm, botanical and calm to browse.",
     stack: ["React", "Tailwind", "Node.js", "Express"],
+  },
+];
+
+const GROCERY_FEATURES = [
+  {
+    title: "POS Billing",
+    Icon: ShoppingCart,
+    text: "Quickly search and add products to the cart, manage quantities, calculate totals, and process customer payments.",
+  },
+  {
+    title: "Product Management",
+    Icon: Package,
+    text: "Manage grocery products, prices, stock information, and product details from the system.",
+  },
+  {
+    title: "Pricing Tiers",
+    Icon: BadgeDollarSign,
+    text: "Support different pricing options such as Standard, Premium, and Gold pricing.",
+  },
+  {
+    title: "Customer Management",
+    Icon: Users,
+    text: "Add and manage customer information during the billing process.",
+  },
+  {
+    title: "Admin Dashboard",
+    Icon: LayoutDashboard,
+    text: "A dedicated admin section for managing products, users, inventory, and overall system operations.",
+  },
+  {
+    title: "Employee Panel",
+    Icon: UserCog,
+    text: "A simple and focused interface that allows employees to efficiently handle daily billing and customer transactions.",
+  },
+  {
+    title: "Cart Management",
+    Icon: Calculator,
+    text: "Add, remove, and update products with automatic subtotal and total calculations.",
+  },
+  {
+    title: "Receipts",
+    Icon: ReceiptText,
+    text: "Support for generating and managing customer receipts.",
+  },
+  {
+    title: "Authentication",
+    Icon: ShieldCheck,
+    text: "Secure login and user access management for administrators and employees.",
+  },
+  {
+    title: "Responsive Design",
+    Icon: MonitorSmartphone,
+    text: "The interface is designed to work smoothly across desktop, tablet, and mobile devices.",
+  },
+];
+
+const GROCERY_TECH_STACK = [
+  { group: "Frontend", items: ["React", "JavaScript", "Tailwind CSS"] },
+  {
+    group: "Backend / Services",
+    items: ["Firebase Authentication", "Firebase Firestore", "Firebase"],
   },
 ];
 
@@ -278,6 +350,176 @@ function Heading({ children, className = "" }) {
   );
 }
 
+function GroceryPosDetailsModal() {
+  const [open, setOpen] = useState(false);
+  const shouldReduceMotion = useReducedMotion();
+
+  useEffect(() => {
+    if (!open) return;
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = originalOverflow;
+    };
+  }, [open]);
+
+  return (
+    <DialogPrimitive.Root open={open} onOpenChange={setOpen}>
+      <DialogPrimitive.Trigger asChild>
+        <motion.button
+          type="button"
+          whileHover={{ scale: 1.04 }}
+          whileTap={{ scale: 0.97 }}
+          transition={{ type: "spring", stiffness: 300, damping: 20 }}
+          className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-violet-700 to-violet-400 px-5 py-2.5 text-sm font-medium text-white shadow-[0_12px_30px_-12px_rgba(132,94,194,0.9)] outline-none transition-shadow hover:shadow-[0_18px_38px_-14px_rgba(132,94,194,1)] focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:ring-offset-2 focus-visible:ring-offset-paper"
+        >
+          Project Details <LayoutDashboard className="h-4 w-4" />
+        </motion.button>
+      </DialogPrimitive.Trigger>
+
+      <DialogPrimitive.Portal>
+        <DialogPrimitive.Overlay className="fixed inset-0 z-[70] bg-ink/40 backdrop-blur-md duration-300 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:animate-in data-[state=open]:fade-in-0" />
+        <DialogPrimitive.Content className="glass-panel fixed left-1/2 top-1/2 z-[80] flex max-h-[calc(100dvh-1rem)] w-[calc(100vw-1rem)] max-w-5xl -translate-x-1/2 -translate-y-1/2 flex-col overflow-hidden rounded-[26px] p-0 shadow-[0_40px_120px_-45px_rgba(132,94,194,0.95)] outline-none duration-300 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95 sm:max-h-[calc(100dvh-2rem)] sm:w-[calc(100vw-3rem)] sm:rounded-[34px]">
+          <DialogPrimitive.Close asChild>
+            <button
+              type="button"
+              aria-label="Close project details"
+              className="absolute right-3 top-3 z-10 grid h-10 w-10 place-items-center rounded-full border border-violet-300/60 bg-white/80 text-violet-700 shadow-[0_12px_28px_-18px_rgba(132,94,194,0.9)] backdrop-blur transition-all duration-300 hover:-translate-y-0.5 hover:bg-white focus:outline-none focus:ring-2 focus:ring-violet-500 focus:ring-offset-2 focus:ring-offset-paper sm:right-5 sm:top-5"
+            >
+              <X className="h-4 w-4" />
+            </button>
+          </DialogPrimitive.Close>
+
+          <div className="overflow-y-auto px-5 pb-6 pt-6 sm:px-7 sm:pb-8 sm:pt-8 lg:px-9">
+            <motion.div
+              initial={shouldReduceMotion ? false : { opacity: 0, y: 14 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.42, ease: [0.16, 1, 0.3, 1] }}
+            >
+              <header className="border-b border-violet-300/35 pb-6 pr-11 sm:pb-7 sm:pr-14">
+                <div className="flex flex-wrap items-center gap-3">
+                  <span className="inline-flex max-w-full items-center gap-2 rounded-full border border-violet-300/60 bg-white/70 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.16em] text-violet-700 backdrop-blur sm:px-4 sm:text-[11px]">
+                    <span className="h-1.5 w-1.5 rounded-full bg-violet-500" />
+                    02 — POINT OF SALE SYSTEM
+                  </span>
+                  <span className="inline-flex rounded-full border border-violet-300/50 bg-violet-200/40 px-3 py-1.5 text-xs font-medium text-violet-700">
+                    Currently in Production
+                  </span>
+                </div>
+                <DialogPrimitive.Title
+                  className="mt-5 font-serif font-semibold leading-[1.05] tracking-[-0.03em] text-ink"
+                  style={{ fontSize: "clamp(1.9rem, 5vw, 3.45rem)" }}
+                >
+                  Smart Grocery POS
+                </DialogPrimitive.Title>
+                <DialogPrimitive.Description
+                  id="grocery-pos-description"
+                  className="mt-4 max-w-3xl text-[15px] leading-relaxed text-muted-ink sm:text-base"
+                >
+                  A modern point-of-sale system designed to simplify daily grocery store operations
+                  and provide an efficient experience for both administrators and employees.
+                </DialogPrimitive.Description>
+              </header>
+
+              <section className="mt-7 grid gap-4 lg:grid-cols-[220px_minmax(0,1fr)] lg:gap-8">
+                <div className="font-mono text-[11px] uppercase tracking-[0.2em] text-violet-500">
+                  Project Overview
+                </div>
+                <p className="text-[15px] leading-relaxed text-muted-ink sm:text-base">
+                  Smart Grocery POS is designed for grocery and small store businesses to manage
+                  products, billing, customers, and daily operations through a clean and intuitive
+                  interface. The system focuses on fast billing, organized inventory management, and
+                  a simple workflow for employees.
+                </p>
+              </section>
+
+              <section className="mt-8">
+                <div className="flex items-end justify-between gap-4">
+                  <h3 className="font-serif text-2xl font-semibold tracking-[-0.02em] text-ink sm:text-3xl">
+                    Key Features
+                  </h3>
+                  <span className="hidden font-mono text-[10px] uppercase tracking-[0.18em] text-violet-500 sm:inline">
+                    10 core modules
+                  </span>
+                </div>
+                <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                  {GROCERY_FEATURES.map(({ title, Icon, text }, index) => (
+                    <motion.article
+                      key={title}
+                      initial={shouldReduceMotion ? false : { opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{
+                        duration: 0.36,
+                        delay: shouldReduceMotion ? 0 : 0.03 * index,
+                        ease: [0.16, 1, 0.3, 1],
+                      }}
+                      className="group rounded-[22px] border border-violet-300/35 bg-white/55 p-4 shadow-[0_18px_42px_-34px_rgba(132,94,194,0.85)] transition-all duration-300 hover:-translate-y-1 hover:border-violet-400/70 hover:bg-white/80 sm:p-5"
+                    >
+                      <div className="grid h-10 w-10 place-items-center rounded-2xl bg-violet-200/55 text-violet-700 transition-colors duration-300 group-hover:bg-violet-700 group-hover:text-white">
+                        <Icon className="h-5 w-5" />
+                      </div>
+                      <h4 className="mt-4 font-serif text-lg font-semibold tracking-[-0.01em] text-ink">
+                        {title}
+                      </h4>
+                      <p className="mt-2 text-sm leading-relaxed text-muted-ink">{text}</p>
+                    </motion.article>
+                  ))}
+                </div>
+              </section>
+
+              <section className="mt-8">
+                <h3 className="font-serif text-2xl font-semibold tracking-[-0.02em] text-ink sm:text-3xl">
+                  Technology Stack
+                </h3>
+                <div className="mt-4 grid gap-3 md:grid-cols-2">
+                  {GROCERY_TECH_STACK.map((stackGroup) => (
+                    <div
+                      key={stackGroup.group}
+                      className="rounded-[22px] border border-violet-300/35 bg-white/55 p-4 sm:p-5"
+                    >
+                      <div className="font-mono text-[11px] uppercase tracking-[0.18em] text-violet-500">
+                        {stackGroup.group}
+                      </div>
+                      <div className="mt-4 flex flex-wrap gap-2">
+                        {stackGroup.items.map((item) => (
+                          <span
+                            key={item}
+                            className="rounded-full border border-violet-300/50 bg-white/75 px-3 py-1.5 text-xs font-medium text-violet-700 shadow-[inset_0_1px_0_rgba(255,255,255,0.7)]"
+                          >
+                            {item}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </section>
+
+              <section className="mt-8 flex flex-col gap-4 rounded-[24px] border border-violet-300/45 bg-violet-200/30 p-5 sm:flex-row sm:items-start sm:p-6">
+                <div className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-violet-700 text-white shadow-[0_14px_30px_-16px_rgba(132,94,194,0.95)]">
+                  <ShieldCheck className="h-5 w-5" />
+                </div>
+                <div>
+                  <div className="font-mono text-[11px] uppercase tracking-[0.18em] text-violet-500">
+                    Project Status
+                  </div>
+                  <h3 className="mt-2 font-serif text-xl font-semibold tracking-[-0.01em] text-ink sm:text-2xl">
+                    Status: Currently in Production
+                  </h3>
+                  <p className="mt-2 text-sm leading-relaxed text-muted-ink sm:text-[15px]">
+                    This project is currently under active development and is not publicly available
+                    yet.
+                  </p>
+                </div>
+              </section>
+            </motion.div>
+          </div>
+        </DialogPrimitive.Content>
+      </DialogPrimitive.Portal>
+    </DialogPrimitive.Root>
+  );
+}
+
 function ProjectCard({ p, i }) {
   const flipped = i % 2 === 1;
   return (
@@ -324,14 +566,18 @@ function ProjectCard({ p, i }) {
                 ))}
               </div>
               <div className="mt-7 flex flex-wrap gap-3">
-                <MagneticButton
-                  href={p.url || "#contact"}
-                  target={p.url ? "_blank" : undefined}
-                  rel={p.url ? "noreferrer" : undefined}
-                  className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-violet-700 to-violet-400 px-5 py-2.5 text-sm font-medium text-white shadow-[0_12px_30px_-12px_rgba(132,94,194,0.9)]"
-                >
-                  Live preview <ExternalLink className="h-4 w-4" />
-                </MagneticButton>
+                {p.details === "grocery-pos" ? (
+                  <GroceryPosDetailsModal />
+                ) : (
+                  <MagneticButton
+                    href={p.url}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-violet-700 to-violet-400 px-5 py-2.5 text-sm font-medium text-white shadow-[0_12px_30px_-12px_rgba(132,94,194,0.9)]"
+                  >
+                    Live preview <ExternalLink className="h-4 w-4" />
+                  </MagneticButton>
+                )}
                 <MagneticButton
                   href={GMAIL_COMPOSE}
                   target="_blank"
