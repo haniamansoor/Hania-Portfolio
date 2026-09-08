@@ -65,7 +65,7 @@ const STACK = [
   { group: "Languages", items: ["TypeScript", "JavaScript", "HTML", "CSS"] },
   { group: "Frameworks", items: ["React 19", "Next.js", "TanStack"] },
   { group: "Backend", items: ["Node.js", "Express", "Firebase"] },
-  { group: "Tooling", items: ["Git","GitHub", "VS Code", "Vite", "npm", "Figma"] },
+  { group: "Tooling", items: ["VS Code", "Git", "GitHub", "Vite", "npm", "Figma"] },
 ];
 
 const PROJECTS = [
