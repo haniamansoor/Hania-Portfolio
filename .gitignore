@@ -1,0 +1,7 @@
+node_modules/
+.wrangler/
+dist/
+.vite/
+.vercel/
+.env
+.env.local

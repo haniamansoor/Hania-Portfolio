@@ -848,7 +848,7 @@ function Portfolio() {
               className="mx-auto mt-7 max-w-3xl font-serif font-bold leading-[1.02] tracking-[-0.04em] text-ink"
               style={{ fontSize: "clamp(1.9rem, 5.6vw, 4.1rem)" }}
             >
-              Let&apos;s build something <span className="text-gradient-teal">beautiful.</span>
+              Let&apos;s build something  <span className="text-gradient-teal">that solves a problem.</span>
             </h2>
           </Reveal>
           <Reveal delay={0.12}>
